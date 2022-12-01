@@ -4,13 +4,13 @@ const { signToken } = require('../utils/auth');
 
 const resolvers = {
   Query: {
-    foundUser: async (parent, { email }) => {
+    getSingleUser: async (parent, { email }) => {
       return User.findOne({ email: email }).populate('savedBooks');
     }
   },
 
   Mutation: {
-    addUser: async (parent, { username, email, password }) => {
+    createUser: async (parent, { username, email, password }) => {
       // First create the user
       const user = await User.create({ username, email, password });
       // To reduce friction for the user, immediately sign a JSON Web Token and log the user in after they are created

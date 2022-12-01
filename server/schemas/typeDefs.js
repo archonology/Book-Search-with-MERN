@@ -1,28 +1,24 @@
 const { gql } = require('apollo-server-express');
 
 const typeDefs = gql`
+
   type User {
     _id: ID
     username: String
     email: String
-    password: String
-    thoughts: [Thought]!
+    bookCount: Int
+    savedBooks: [Book]
+  }
+// use the GraphQL "input" method to make adding the mutation params easier
+  input Book {
+    bookId: ID
+    authors: [String]
+    description: String
+    title: String
+    link: String
+    image: Image
   }
 
-  type Thought {
-    _id: ID
-    thoughtText: String
-    thoughtAuthor: String
-    createdAt: String
-    comments: [Comment]!
-  }
-
-  type Comment {
-    _id: ID
-    commentText: String
-    commentAuthor: String
-    createdAt: String
-  }
 
   type Auth {
     token: ID!
@@ -30,23 +26,16 @@ const typeDefs = gql`
   }
 
   type Query {
-    users: [User]
-    user(username: String!): User
-    thoughts(username: String): [Thought]
-    thought(thoughtId: ID!): Thought
+    me: User
+    savedBooks(savedBooks: [Book]):
   }
 
   type Mutation {
     addUser(username: String!, email: String!, password: String!): Auth
     login(email: String!, password: String!): Auth
-    addThought(thoughtText: String!, thoughtAuthor: String!): Thought
-    addComment(
-      thoughtId: ID!
-      commentText: String!
-      commentAuthor: String!
-    ): Thought
-    removeThought(thoughtId: ID!): Thought
-    removeComment(thoughtId: ID!, commentId: ID!): Thought
+    saveBook(input: Book): User
+
+    removeBook(bookId: ID!): User
   }
 `;
 

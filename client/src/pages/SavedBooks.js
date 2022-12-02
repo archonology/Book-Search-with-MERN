@@ -1,17 +1,20 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
+//bring in useQuery
+import { useQuery, useMutation } from '@apollo/client';
 import { Jumbotron, Container, CardColumns, Card, Button } from 'react-bootstrap';
-
-import { getMe, deleteBook } from '../utils/API';
+//bring in the get_me query
+import { GET_ME, REMOVE_BOOK } from '../utils/queries';
 import Auth from '../utils/auth';
 import { removeBookId } from '../utils/localStorage';
 
 const SavedBooks = () => {
-  const [userData, setUserData] = useState({});
+  //useQuery refactor from useEffect
+  const { loading, data } = useQuery(GET_ME);
 
   // use this to determine if `useEffect()` hook needs to run again
   const userDataLength = Object.keys(userData).length;
 
-  useEffect(() => {
+  useQuery(() => {
     const getUserData = async () => {
       try {
         const token = Auth.loggedIn() ? Auth.getToken() : null;
@@ -38,14 +41,21 @@ const SavedBooks = () => {
 
   // create function that accepts the book's mongo _id value as param and deletes the book from the database
   const handleDeleteBook = async (bookId) => {
+
+    //define remove_book mutation via deleteBook function
+    const [deleteBook, { error }] = useMutation(REMOVE_BOOK);
+
     const token = Auth.loggedIn() ? Auth.getToken() : null;
 
     if (!token) {
       return false;
     }
 
+    //implement useMutatation to delete a book --is that the right variable?
     try {
-      const response = await deleteBook(bookId, token);
+      const { data } = await deleteBook({
+        variables: { bookId },
+      });
 
       if (!response.ok) {
         throw new Error('something went wrong!');

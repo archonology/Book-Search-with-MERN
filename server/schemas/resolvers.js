@@ -46,26 +46,30 @@ const resolvers = {
     },
     saveBook: async (parent, { bookId }, context) => {
       if (context.user) {
-      return User.findOneAndUpdate(
-        { _id: context.user._id  },
-        {
-          $addToSet: { savedBooks: bookId },
-        },
-        {
-          new: true,
-          runValidators: true,
-        }
-      );
+        return User.findOneAndUpdate(
+          { _id: context.user._id },
+          {
+            $addToSet: { savedBooks: bookId },
+          },
+          {
+            new: true,
+            runValidators: true,
+          }
+        );
       }
     },
-    removeBook: async (parent, { username, bookId }) => {
-      return User.findOneAndUpdate(
-        { username: username },
-        { $pull: { savedBooks: bookId } },
-        { new: true }
-      )
+    removeBook: async (parent, { bookId }, context) => {
+      if (context.user) {
+        return User.findOneAndUpdate(
+          { _id: context.user._id },
+          { $pull: { savedBooks: bookId } },
+          { new: true }
+        )
+      }
+      throw new AuthenticationError('You need to be logged in!');
     }
   },
+
 };
 
 module.exports = resolvers;

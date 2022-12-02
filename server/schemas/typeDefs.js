@@ -9,7 +9,7 @@ const typeDefs = gql`
     bookCount: Int
     savedBooks: [Book]
   }
-// use the GraphQL "input" method to make adding the mutation params easier
+
   input Book {
     bookId: ID
     authors: [String]
@@ -32,9 +32,8 @@ const typeDefs = gql`
 
   type Mutation {
     addUser(username: String!, email: String!, password: String!): Auth
-    login(email: String!, password: String!): Auth
+    loginUser(email: String!, password: String!): Auth
     saveBook(input: Book): User
-
     removeBook(bookId: ID!): User
   }
 `;

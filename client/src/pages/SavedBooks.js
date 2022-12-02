@@ -3,7 +3,8 @@ import React, { useState } from 'react';
 import { useQuery, useMutation } from '@apollo/client';
 import { Jumbotron, Container, CardColumns, Card, Button } from 'react-bootstrap';
 //bring in the get_me query
-import { GET_ME, REMOVE_BOOK } from '../utils/queries';
+import { GET_ME } from '../utils/queries';
+import { REMOVE_BOOK } from '../utils/mutations';
 import Auth from '../utils/auth';
 import { removeBookId } from '../utils/localStorage';
 

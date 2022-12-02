@@ -18,9 +18,9 @@ const resolvers = {
       // Return an `Auth` object that consists of the signed token and user's information
       return { token, user };
     },
-    loginUser: async (parent, { username, password }) => {
+    loginUser: async (parent, { email, password }) => {
       // Look up the user by the provided email address. Since the `email` field is unique,  only one person will exist with that email
-      const user = await User.findOne({ username });
+      const user = await User.findOne({ email });
 
       // If there is no user with that email address, return an Authentication error stating so
       if (!user) {

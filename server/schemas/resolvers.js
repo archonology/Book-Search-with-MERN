@@ -4,8 +4,8 @@ const { signToken } = require('../utils/auth');
 
 const resolvers = {
   Query: {
-    getSingleUser: async (parent, { email }) => {
-      return User.findOne({ email: email }).populate('savedBooks');
+    getSingleUser: async (parent, { username }) => {
+      return User.findOne({ username: username }).populate('savedBooks');
     }
   },
 
@@ -18,9 +18,9 @@ const resolvers = {
       // Return an `Auth` object that consists of the signed token and user's information
       return { token, user };
     },
-    login: async (parent, { email, password }) => {
+    login: async (parent, { username, password }) => {
       // Look up the user by the provided email address. Since the `email` field is unique,  only one person will exist with that email
-      const user = await User.findOne({ email });
+      const user = await User.findOne({ username });
 
       // If there is no user with that email address, return an Authentication error stating so
       if (!user) {
@@ -41,9 +41,9 @@ const resolvers = {
       // Return an `Auth` object that consists of the signed token and user's information
       return { token, user };
     },
-    saveBook: async (parent, { email, bookId }) => {
+    saveBook: async (parent, { username, bookId }) => {
       return User.findOneAndUpdate(
-        { email: email },
+        { username: username },
         {
           $addToSet: { savedBooks: bookId },
         },
@@ -53,9 +53,9 @@ const resolvers = {
         }
       );
     },
-    deleteBook: async (parent, { email, bookId }) => {
+    deleteBook: async (parent, { username, bookId }) => {
       return User.findOneAndUpdate(
-        { email: email },
+        { username: username },
         { $pull: { savedBooks: bookId } },
         { new: true }
       )

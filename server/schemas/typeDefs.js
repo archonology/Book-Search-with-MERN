@@ -9,7 +9,7 @@ const typeDefs = gql`
     bookCount: Int
     savedBooks: [Book]
   }
-// use the GraphQL "input" method to make adding the mutation params easier
+
   input Book {
     bookId: ID
     authors: [String]

@@ -6,7 +6,6 @@ import { saveBook, searchGoogleBooks } from '../utils/API';
 import { saveBookIds, getSavedBookIds } from '../utils/localStorage';
 //bring in our mutation/query
 import { SAVE_BOOK } from '../utils/mutations';
-import { GET_ME } from '../utils/queries';
 
 const SearchBooks = () => {
   // create state for holding returned google api data
@@ -67,11 +66,11 @@ const SearchBooks = () => {
     if (!token) {
       return false;
     }
-    
+
     //refactored to utilize useMutation
     try {
       const { data } = await saveBook({
-        variables: { bookToSave, bookId },
+        variables: { saveBook },
       });
 
       if (!response.ok) {

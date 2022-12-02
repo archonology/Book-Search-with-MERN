@@ -16,7 +16,7 @@ const SavedBooks = () => {
 
   // use this to determine if `useEffect()` hook needs to run again
   const userDataLength = Object.keys(userData).length;
-  const [deleteBook, { error }] = useMutation(REMOVE_BOOK);
+  const [removeBook, { error }] = useMutation(REMOVE_BOOK);
 
   useQuery(() => {
     const getUserData = async () => {
@@ -56,7 +56,7 @@ const SavedBooks = () => {
 
     //implement useMutatation to delete a book --is that the right variable?
     try {
-      const { data } = await deleteBook({
+      const { data } = await removeBook({
         variables: { bookId },
       });
 

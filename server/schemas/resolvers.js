@@ -10,7 +10,7 @@ const resolvers = {
   },
 
   Mutation: {
-    createUser: async (parent, { username, email, password }) => {
+    addUser: async (parent, { username, email, password }) => {
       // First create the user
       const user = await User.create({ username, email, password });
       // To reduce friction for the user, immediately sign a JSON Web Token and log the user in after they are created
@@ -18,7 +18,7 @@ const resolvers = {
       // Return an `Auth` object that consists of the signed token and user's information
       return { token, user };
     },
-    login: async (parent, { username, password }) => {
+    loginUser: async (parent, { username, password }) => {
       // Look up the user by the provided email address. Since the `email` field is unique,  only one person will exist with that email
       const user = await User.findOne({ username });
 
@@ -53,7 +53,7 @@ const resolvers = {
         }
       );
     },
-    deleteBook: async (parent, { username, bookId }) => {
+    removeBook: async (parent, { username, bookId }) => {
       return User.findOneAndUpdate(
         { username: username },
         { $pull: { savedBooks: bookId } },

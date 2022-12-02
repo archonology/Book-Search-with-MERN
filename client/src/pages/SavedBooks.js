@@ -7,13 +7,16 @@ import { GET_ME } from '../utils/queries';
 import { REMOVE_BOOK } from '../utils/mutations';
 import Auth from '../utils/auth';
 import { removeBookId } from '../utils/localStorage';
+import { getMe } from '../utils/API';
 
 const SavedBooks = () => {
   //useQuery refactor from useEffect
   const { loading, data } = useQuery(GET_ME);
+  const [userData, setUserData] = useState({});
 
   // use this to determine if `useEffect()` hook needs to run again
   const userDataLength = Object.keys(userData).length;
+  const [deleteBook, { error }] = useMutation(REMOVE_BOOK);
 
   useQuery(() => {
     const getUserData = async () => {
@@ -44,7 +47,6 @@ const SavedBooks = () => {
   const handleDeleteBook = async (bookId) => {
 
     //define remove_book mutation via deleteBook function
-    const [deleteBook, { error }] = useMutation(REMOVE_BOOK);
 
     const token = Auth.loggedIn() ? Auth.getToken() : null;
 
@@ -58,11 +60,11 @@ const SavedBooks = () => {
         variables: { bookId },
       });
 
-      if (!response.ok) {
+      if (!data.ok) {
         throw new Error('something went wrong!');
       }
 
-      const updatedUser = await response.json();
+      const updatedUser = await data.json();
       setUserData(updatedUser);
       // upon success, remove book's id from localStorage
       removeBookId(bookId);

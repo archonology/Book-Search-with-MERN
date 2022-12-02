@@ -6,7 +6,7 @@ const { authMiddleware } = require('./utils/auth');
 //bring in typeDefs and resolvers
 const { typeDefs, resolvers } = require('./schemas');
 const db = require('./config/connection');
-const routes = require('./routes');
+// const routes = require('./routes');
 
 const PORT = process.env.PORT || 3001;
 const app = express();
@@ -30,7 +30,7 @@ app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, '../client/build/index.html'));
 });
 
-app.use(routes);
+// app.use(routes);
 
 //routes now used in the MERN way
 

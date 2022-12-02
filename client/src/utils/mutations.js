@@ -25,8 +25,8 @@ export const ADD_USER = gql`
 `;
 
 export const SAVE_BOOK = gql`
-  mutation saveBook($Book: bookData) {
-  saveBook(Book: $bookData}) {
+  mutation saveBook($Book: bookToSave) {
+  saveBook(Book: $bookToSave}) {
     token
     me {
       _id
@@ -46,4 +46,3 @@ mutation removeBook($bookId: ID!) {
 removeBook(bookId: $ID){Book}
 }
 `;
-

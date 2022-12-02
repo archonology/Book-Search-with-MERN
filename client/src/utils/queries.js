@@ -8,7 +8,7 @@ query me {
     email
     bookCount
     savedBooks {
-      [Book]
+      savedBooks(criteria: Book): [Book]!
     }
   }
 }

@@ -69,8 +69,9 @@ const SearchBooks = () => {
 
     //refactored to utilize useMutation
     try {
+      console.log(bookToSave);
       const { data } = await saveBook({
-        variables: { bookId },
+        variables: { bookToSave },
       });
 
       if (!data.ok) {

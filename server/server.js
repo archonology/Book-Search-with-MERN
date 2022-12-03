@@ -6,7 +6,6 @@ const { authMiddleware } = require('./utils/auth');
 //bring in typeDefs and resolvers
 const { typeDefs, resolvers } = require('./schemas');
 const db = require('./config/connection');
-// const routes = require('./routes');
 
 const PORT = process.env.PORT || 3001;
 const app = express();
@@ -18,7 +17,6 @@ const server = new ApolloServer({
   context: authMiddleware,
 });
 
-
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
@@ -29,10 +27,6 @@ if (process.env.NODE_ENV === 'production') {
 app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, '../client/build/index.html'));
 });
-
-// app.use(routes);
-
-//routes now used in the MERN way
 
 
 // Create a new instance of an Apollo server with the GraphQL schema

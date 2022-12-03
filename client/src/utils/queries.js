@@ -7,10 +7,7 @@ query me {
     username
     email
     bookCount
-    savedBooks {
-      savedBooks(criteria: Book): [Book]!
-    }
+    savedBooks
   }
 }
 `;
-

@@ -45,15 +45,15 @@ const resolvers = {
       // Return an `Auth` object that consists of the signed token and user's information
       return { token, user };
     },
-    saveBook: async (parent, { book }, context) => {
+    saveBook: async (parent, { ...bookToSave }, context) => {
       if (context.user) {
 
-        console.log("Is this getting accessed even?");
+        console.log("Hello? Anyone?");
         
         return User.findOneAndUpdate(
           { _id: context.user._id },
           {
-            $addToSet: { savedBooks: book },
+            $addToSet: { savedBooks: { ...bookToSave } },
           },
           {
             new: true,

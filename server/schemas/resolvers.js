@@ -48,7 +48,7 @@ const resolvers = {
     saveBook: async (parent, { book }, context) => {
       if (context.user) {
 
-        console.log(book);
+        console.log("Is this getting accessed even?");
         
         return User.findOneAndUpdate(
           { _id: context.user._id },

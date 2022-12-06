@@ -1,9 +1,9 @@
 # Book Search with MERN
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 ## Links
-[Click here to watch a video tutorial on Youtube](na)
+Deployed site via Heroku: https://book-search-84.herokuapp.com
 ## Screenshot
-![]()    
+![screenshot]()    
 
 ## Description
 A study in refactoring RESTful API to GraphQL API practices, this book search tool tackles the need for using MERN in search fetch APIs.

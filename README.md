@@ -6,7 +6,7 @@ Deployed site via Heroku: https://book-search-84.herokuapp.com
 ![screenshot]()    
 
 ## Description
-A study in refactoring RESTful API to GraphQL API practices, this book search tool tackles the need for using MERN in search fetch APIs.
+A study in refactoring RESTful API to GraphQL API practices, this book search tool tackles the need for using MERN in search fetch APIs. Other tech used: Apollo Server, Bootstrap, React-dom, React-router-dom, jwt-decode, and Apollo/client.
     
 
 ## Questions

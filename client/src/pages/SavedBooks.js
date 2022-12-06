@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Jumbotron, Container, CardColumns, Card, Button } from 'react-bootstrap';
 //mutation and query from apollo
 import { useMutation, useQuery } from '@apollo/client';
@@ -7,12 +7,31 @@ import { REMOVE_BOOK } from '../utils/mutations';
 import Auth from '../utils/auth';
 import { removeBookId } from '../utils/localStorage';
 
-const SavedBooks = () => {
- 
-  // refactored useEffect to useQuery hook
-  const { loading, err, userData } = useQuery(GET_ME); 
 
-  const userDataLength = Object.keys(userData).length;
+const SavedBooks = () => {
+  // do I still need useState?
+  const [userData, setUserData] = useState({});
+
+
+
+  const { loading, err, data } = useQuery(GET_ME);
+  if(loading) {
+    console.log("loading");
+  } else {
+    console.log(data.me);
+    // setUserData(data.me, []);
+  }
+
+// const userData = data?.me || {};
+
+  console.log(userData);
+
+  // this is from useEffect -- what needs to change?
+  // const userDataLength = Object.keys(userData).length;
+
+  //userData coming back null
+  console.log(userData);
+  console.log(userData.length);
 
   //define the remove book mutation
   const [removeBook, { error }] = useMutation(REMOVE_BOOK);
@@ -32,10 +51,6 @@ const SavedBooks = () => {
         variables: { bookId },
       });
 
-      if (!data.ok) {
-        throw new Error('something went wrong!');
-      }
-
       const updatedUser = await data.json();
       userData(updatedUser);
       // upon success, remove book's id from localStorage
@@ -46,9 +61,10 @@ const SavedBooks = () => {
   };
 
   // if data isn't here yet, say so
-  if (!userDataLength) {
+  if (!userData) {
     return <h2>LOADING...</h2>;
   }
+
 
   return (
     <>

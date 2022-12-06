@@ -45,17 +45,17 @@ const resolvers = {
       // Return an `Auth` object that consists of the signed token and user's information
       return { token, user };
     },
-    saveBook: async (parent, { user, body }, context) => {
+    saveBook: async (parent, { ...bookToSave }, context) => {
       if (context.user) {
 
         console.log("Hello, I'm the saveBook resolver");
         
         const updatedUser = await User.findOneAndUpdate(
           { _id: context.user._id },
-          { $addToSet: { savedBooks: body } },
+          { $addToSet: { savedBooks: { ...bookToSave } } },
           { new: true, runValidators: true }
         );
-        return res.json(updatedUser);
+        return updatedUser;
       }
       throw new AuthenticationError('You need to be logged in!');
     },

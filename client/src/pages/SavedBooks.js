@@ -12,26 +12,30 @@ const SavedBooks = () => {
   // do I still need useState?
   const [userData, setUserData] = useState({});
 
+  // use this to determine if `useEffect()` hook needs to run again
+  const userDataLength = Object.keys(userData).length;
 
 
   const { loading, err, data } = useQuery(GET_ME);
-  if(loading) {
+  if (loading) {
     console.log("loading");
   } else {
     console.log(data.me);
-    // setUserData(data.me, []);
   }
 
-// const userData = data?.me || {};
+  useEffect(() => {
+    if (data) {
+      setUserData(data.me);
+    }
 
-  console.log(userData);
+  }, [userDataLength]);
 
-  // this is from useEffect -- what needs to change?
-  // const userDataLength = Object.keys(userData).length;
+  useEffect(() => {
+    if (data) {
+      console.log(userData);
+    }
+  }, [userData]);
 
-  //userData coming back null
-  console.log(userData);
-  console.log(userData.length);
 
   //define the remove book mutation
   const [removeBook, { error }] = useMutation(REMOVE_BOOK);
@@ -51,8 +55,8 @@ const SavedBooks = () => {
         variables: { bookId },
       });
 
-      const updatedUser = await data.json();
-      userData(updatedUser);
+      const updatedUser =  data;
+      setUserData(updatedUser);
       // upon success, remove book's id from localStorage
       removeBookId(bookId);
     } catch (err) {
@@ -61,10 +65,9 @@ const SavedBooks = () => {
   };
 
   // if data isn't here yet, say so
-  if (!userData) {
+  if (!userDataLength) {
     return <h2>LOADING...</h2>;
   }
-
 
   return (
     <>

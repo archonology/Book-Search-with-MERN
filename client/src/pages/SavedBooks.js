@@ -9,36 +9,17 @@ import { removeBookId } from '../utils/localStorage';
 
 
 const SavedBooks = () => {
-  // do I still need useState?
-  const [userData, setUserData] = useState({});
 
-  // use this to determine if `useEffect()` hook needs to run again
-  const userDataLength = Object.keys(userData).length;
-
-
-  const { loading, err, data } = useQuery(GET_ME);
-  if (loading) {
-    console.log("loading");
-  } else {
-    console.log(data.me);
-  }
-
-  useEffect(() => {
-    if (data) {
-      setUserData(data.me);
-    }
-
-  }, [userDataLength]);
-
-  useEffect(() => {
-    if (data) {
-      console.log(userData);
-    }
-  }, [userData]);
-
+  const { loading, data } = useQuery(GET_ME);
 
   //define the remove book mutation
   const [removeBook, { error }] = useMutation(REMOVE_BOOK);
+
+  const userData = data?.me || {};
+
+
+  // use this to determine if `useEffect()` hook needs to run again
+  const userDataLength = Object.keys(userData).length;
 
 
 
@@ -55,10 +36,10 @@ const SavedBooks = () => {
         variables: { bookId },
       });
 
-      const updatedUser =  data;
-      setUserData(updatedUser);
       // upon success, remove book's id from localStorage
       removeBookId(bookId);
+      //reload with the update
+      window.location.reload();
     } catch (err) {
       console.error(err);
     }

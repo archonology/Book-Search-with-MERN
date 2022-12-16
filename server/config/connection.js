@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/booksDB', {
+mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/primaDB', {
   useNewUrlParser: true,
   useUnifiedTopology: true,
   useCreateIndex: true,
